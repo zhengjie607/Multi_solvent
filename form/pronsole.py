@@ -990,6 +990,7 @@ class pronsole(cmd.Cmd):
         self.fgcode.estimate_duration()
         self.filename = filename
         self.parse_gcode(self.fgcode)
+        
     def _load_gcode(self,filename):
         gcode=gcoder.GCode(open(filename,'r'))
         return gcode

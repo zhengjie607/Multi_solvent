@@ -73,6 +73,7 @@ class printcore():
         self.dtr = None
         self.port = None
         self.analyzer = gcoder.GCode()
+        self.bed_temp_target=None
         # Serial instance connected to the printer, should be None when
         # disconnected
         self.printer = None
@@ -628,6 +629,8 @@ class printcore():
             # Strip comments
             tline = gcoder.gcode_strip_comment_exp.sub("", tline).strip()
             if tline:
+                if self.bed_temp_target and tline.startswith("M190"):
+                    tline="M190 S"+str(self.bed_temp_target)
                 self._send(tline, self.lineno, True)
                 print('当前执行：',tline)
                 self.lineno += 1
