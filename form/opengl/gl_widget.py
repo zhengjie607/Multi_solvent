@@ -39,8 +39,9 @@ class GLWidget(QOpenGLWidget):
     def drawLine(self,showline):
         for lines in self.data[showline]:
             glBegin(GL_LINE_LOOP)
-            glColor(1,0,0)
+            glColor(np.random.normal(),np.random.normal(),np.random.normal())
             for line in lines:
+                
                 glVertex(line[0],line[1],line[2])
             glEnd()
     def drawBase(self,width,height):
