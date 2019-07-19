@@ -73,7 +73,8 @@ class printcore():
         self.dtr = None
         self.port = None
         self.analyzer = gcoder.GCode()
-        self.bed_temp_target=None
+        self.bed_temp_target=None#自定义基板加热温度
+        self.skip_layer=1#设置起始层，如果为1，则从头打印
         # Serial instance connected to the printer, should be None when
         # disconnected
         self.printer = None
@@ -631,7 +632,10 @@ class printcore():
             if tline:
                 if self.bed_temp_target and tline.startswith("M190"):
                     tline="M190 S"+str(self.bed_temp_target)
-                self._send(tline, self.lineno, True)
+                if layer>=3 and layer<=self.skip_layer+1:
+                    pass
+                else:
+                    self._send(tline, self.lineno, True)
                 print('当前执行：',tline)
                 self.lineno += 1
                 for handler in self.event_handler:
